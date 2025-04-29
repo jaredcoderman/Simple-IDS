@@ -16,8 +16,3 @@ class Watcher(FileSystemEventHandler):
         if event.is_directory:
             return
         print(f"{datetime.now()} Event: {event.event_type} | File: {event.src_path}")
-
-    def on_moved(self, event):
-        if event.is_directory:
-            return
-        print(f"{datetime.now()} Event: {event.event_type} | From: {event.src_path} | To: {event.dest_path}")
