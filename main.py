@@ -1,10 +1,14 @@
 from watchdog.observers import Observer
-from classes.watcher import Watcher
+from classes.watchdog_handler import WatchdogHandler
 import time
+from classes.splunk_logger import SplunkLogger
 
 def watch_directories(directories):
+  
+  splunk_logger = SplunkLogger()
+
   observer = Observer()
-  event_handler = Watcher()
+  event_handler = WatchdogHandler(splunk_logger=splunk_logger)
 
   for directory in directories:
     observer.schedule(event_handler, path=directory, recursive=True)
