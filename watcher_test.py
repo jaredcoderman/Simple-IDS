@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock
 from datetime import datetime
-from classes.watcher import Watcher
+from classes.watchdog_handler import WatchdogHandler
 
 @pytest.fixture
 def mock_event():
@@ -12,7 +12,7 @@ def mock_event():
     return mock_event
 
 def test_on_modified(mock_event, capsys):
-    watcher = Watcher()
+    watcher = WatchdogHandler(None)
 
     watcher.on_modified(mock_event)
 
@@ -23,14 +23,14 @@ def test_on_modified(mock_event, capsys):
 
 def test_on_created(mock_event, capsys):
     mock_event.event_type = 'created'
-    watcher = Watcher()
+    watcher = WatchdogHandler(None)
     watcher.on_created(mock_event)
     captured = capsys.readouterr()
     assert f"Event: created | File: /test_dir/file.txt" in captured.out
 
 def test_on_deleted(mock_event, capsys):
     mock_event.event_type = 'deleted'
-    watcher = Watcher()
+    watcher = WatchdogHandler(None)
     watcher.on_deleted(mock_event)
     captured = capsys.readouterr()
     assert f"Event: deleted | File: /test_dir/file.txt" in captured.out
