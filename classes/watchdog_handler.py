@@ -6,17 +6,23 @@ class WatchdogHandler(FileSystemEventHandler):
     def __init__(self, splunk_logger):
         self.splunk_logger = splunk_logger
 
-    @log_to_splunk
+    # @log_to_splunk
     def on_modified(self, event):
         if event.is_directory:
             return
 
-    @log_to_splunk
+    # @log_to_splunk
     def on_created(self, event):
         if event.is_directory:
             return
 
-    @log_to_splunk
+    # @log_to_splunk
     def on_deleted(self, event):
+        if event.is_directory:
+            return
+        
+    # @log_to_splunk
+    def on_moved(self, event):
+        print(f"{event.src_path} moved to -> {event.dest_path}")
         if event.is_directory:
             return
