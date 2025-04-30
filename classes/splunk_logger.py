@@ -1,14 +1,22 @@
 import splunklib.client as client
 import functools
+import json
 
 class SplunkLogger:
   def __init__(self, host="localhost", port=8089, username='jhead', password='hellosplunk123', scheme="https"):
     self.service = client.connect(host=host, port=port, username=username, password=password, scheme=scheme)
     self.index = self.service.indexes['main']
 
-  def log_event(self, event_message):
-    self.index.submit(event_message)
-    print(f"Logged event: {event_message}")
+  def log_event(self, message, metadata=None):
+    if metadata:
+      full_log = {
+        "message": message,
+        "metadata": metadata
+      }
+      self.index.submit(json.dumps(full_log))
+    else:
+      self.index.submit(message)
+    print(f"Logged event")
 
 def log_to_splunk(func):
   """
