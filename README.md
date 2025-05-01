@@ -3,6 +3,7 @@
 This project is a lightweight detection system that monitors file changes in real time and flags suspicious behavior — such as renamed executables and unauthorized file drops — then logs those events to **Splunk** in structured JSON format.
 
 It simulates some techniques used by real malware (e.g., Emotet or ransomware), and is designed with modularity, scalability, and security awareness in mind.
+(Yes my splunk user and password are there (in SplunkLogger) but it is just for my machine so it does not matter normally I would use a .env file)
 
 > 🎯 Built to demonstrate endpoint-style detection logic inspired by tools like CrowdStrike Falcon.
 
@@ -54,6 +55,17 @@ watchdog
 splunklib
 
 Access to a running Splunk instance (tested on Splunk Enterprise)
+
+## 🚀 Run It
+Start your Splunk instance and ensure the main index exists
+
+Run the monitor:
+```python watcher.py```
+
+(Optional) In a second terminal, simulate a malicious rename:
+```python simulate_attack.py```
+
+View alerts in the terminal and Splunk Web UI (https://localhost:8000)
 
 ## 📌 Why This Project?
 I’m currently pursuing a career in cybersecurity with a focus on detection engineering. This project demonstrates:
